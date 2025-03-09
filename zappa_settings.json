@@ -20,7 +20,7 @@
         "events": [
             {
                 "function": "proyecto.app",
-                "expression": "cron(17 23 * * ? *)"
+                "expression": "cron(25 23 * * ? *)"
             }
         ]
     },

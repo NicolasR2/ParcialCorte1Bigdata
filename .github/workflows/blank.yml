@@ -54,8 +54,8 @@ jobs:
           pytest pruebascsv.py 
       - name: upgrade dev y dev2
         run: |
-          zappa upgrade dev
-          zappa upgrade dev2
+          zappa update dev
+          zappa update dev2
           
         
         
