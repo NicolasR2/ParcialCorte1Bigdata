@@ -52,7 +52,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pytest pruebascsv.py 
-      - name: upgrade dev y dev2
+      - name: List buckets
+        run: aws s3 ls
+      - name: update dev y dev2
         run: |
           zappa update dev
           zappa update dev2
