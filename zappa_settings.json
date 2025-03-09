@@ -13,13 +13,48 @@
         "project_name": "casas",
         "runtime": "python3.10",
         "s3_bucket": "zappa-kpk1mm5he",
-        "keep_warm": false, 
-        "apigateway_enabled": false, 
-        "manage_roles": false, 
-        "role_name": "LabRole", 
-        "events": [{
-            "function": "proyecto.app", // The function to execute
-            "expression": "cron(55 3 * * ? *)"
-        }]
+        "keep_warm": false,
+        "apigateway_enabled": false,
+        "manage_roles": false,
+        "role_name": "LabRole",
+        "events": [
+            {
+                "function": "proyecto.app",
+                "expression": "cron(57 14 * * ? *)"
+            }
+        ]
+    },
+
+    "dev2": {
+        "app_function": "proyecto1.app",
+        "aws_region": "us-east-1",
+        "exclude": [
+            "boto3",
+            "dateutil",
+            "botocore",
+            "s3transfer",
+            "concurrent"
+        ],
+        "profile_name": "default",
+        "project_name": "lambda_processor",
+        "runtime": "python3.10",
+        "s3_bucket": "zappa-bucket-xxx",
+        "keep_warm": false,
+        "apigateway_enabled": false,
+        "manage_roles": false,
+        "role_name": "LabRole",
+        "events": [
+            {
+                "function": "proyecto1.app",
+                "event_source": {
+                    "arn": "arn:aws:s3:::landingcasas211",
+                    "events": ["s3:ObjectCreated:*"]
+                }
+            }
+        ]
     }
 }
+
+
+
+
