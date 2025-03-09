@@ -4,7 +4,7 @@ name: CI
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
+  # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
     branches: [ "main" ]
   pull_request:
@@ -23,7 +23,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
@@ -34,3 +34,25 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+      - name: List current directory
+        run: ls
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+           python-version: '3.x'
+      - name: Py test and update
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pytest 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+            aws-region: us-east-1
+      - name: List buckets
+        run: aws s3 ls
+        
+        
