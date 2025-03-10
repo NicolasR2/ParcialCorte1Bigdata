@@ -19,7 +19,7 @@
         "events": [
             {
                 "function": "proyecto.app",
-                "expression": "cron(15 00 * * ? *)"
+                "expression": "cron(22 0 * * ? *)"
             }
         ] ,
         "environment_variables": {
