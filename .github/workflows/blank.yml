@@ -50,20 +50,22 @@ jobs:
             
       - name: Install dependencies
         run: |
-          
+          python -m venv ent
+          source ent/bin/activate
           pip install -r requirements.txt
           pip install flake8     
           pip install zappa
           
       - name: Ejecutar flake8
         run: |
-          source venv/bin/activate
+          source ent/bin/activate
           flake8 --max-line-length=100 proyecto1.py proyecto.py pruebascsv.py
       - name: Pytest and update
         run: |
-          source venv/bin/activate
+          source ent/bin/activate
           pytest pruebascsv.py 
       - name: update dev y dev2
         run: |
+          source ent/bin/activate
           zappa update dev
           zappa update dev2
