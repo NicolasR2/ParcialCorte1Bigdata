@@ -10,7 +10,7 @@ def test_file_name():
 
 @pytest.fixture
 def sample_html():
-    """HTML con múltiples anuncios"""
+    """HTML con multiples anuncios"""
     return b"""
     <div class="listing-card__content">
         <h2 class="title" data-test="snippet__title">Casa en venta</h2>
@@ -23,12 +23,12 @@ def sample_html():
     <div class="listing-card__content">
         <h2 class="title" data-test="snippet__title">Apartamento en Medellín</h2>
         <span class="price__actual" data-test="price__actual">$150,000</span>
-        <span class="listing-card__location__geo">Medellín, Colombia</span>
+        <span class="listing-card__location__geo">Medellin, Colombia</span>
         <p data-test="bedrooms">2 habitaciones</p>
         <p data-test="bathrooms">1 baño</p>
         <p data-test="floor-area">80 m2</p>
     </div>
-    """
+    """.encode("utf-8")
 
 @pytest.fixture
 def sample_html_missing_values():
@@ -40,7 +40,7 @@ def sample_html_missing_values():
         <p data-test="bedrooms">3 habitaciones</p>
         <p data-test="bathrooms">2 baños</p>
     </div>
-    """
+    """.encode("utf-8")
 
 @pytest.fixture
 def sample_html_empty():
