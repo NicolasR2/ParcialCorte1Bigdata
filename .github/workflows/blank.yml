@@ -65,6 +65,5 @@ jobs:
           pytest pruebascsv.py 
       - name: update dev y dev2
         run: |
-          source venv/bin/activate
           zappa update dev
           zappa update dev2
