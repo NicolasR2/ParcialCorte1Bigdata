@@ -14,12 +14,12 @@
         "s3_bucket": "zappa-kpk1mm5he",
         "keep_warm": false,
         "apigateway_enabled": false,
-        "manage_roles": true,
+        "manage_roles": false,
         "role_name": "LabRole",
         "events": [
             {
                 "function": "proyecto.app",
-                "expression": "cron(47 0 * * ? *)"
+                "expression": "cron(10 01 * * ? *)"
             }
         ] ,
         "environment_variables": {
