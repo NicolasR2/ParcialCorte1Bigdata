@@ -58,7 +58,7 @@ jobs:
       - name: Ejecutar flake8
         run: |
           source venv/bin/activate
-          flake8 --max-line-length=100
+          flake8 --max-line-length=100 proyecto1.py proyecto.py pruebascsv.py
       - name: Pytest and update
         run: |
           source venv/bin/activate
