@@ -8,6 +8,7 @@ S3_BUCKET_CSV = "casasfinal211"
 
 s3 = boto3.client("s3")
 
+
 def process_html(file_name):
     """Procesa un archivo HTML almacenado en S3 y lo convierte en un CSV."""
     print(f"Procesando archivo: {file_name}")
@@ -22,7 +23,7 @@ def process_html(file_name):
 
     soup = BeautifulSoup(html_content, "html.parser")
     listings = soup.find_all("div", class_="listing-card__content")
-    
+
     if not listings:
         print("No se encontraron anuncios en el HTML")
         return {"status": "error", "message": "No se encontraron anuncios"}
@@ -32,9 +33,10 @@ def process_html(file_name):
         fecha_descarga = datetime.today().strftime("%Y-%m-%d")
 
         def extract_text(selector):
+            """Extrae el texto de un elemento HTML si existe, de lo contrario devuelve 'N/A'."""
             element = listing.select_one(selector)
             return element.text.strip() if element else "N/A"
-        
+
         data.append([
             fecha_descarga,
             extract_text(".title[data-test='snippet__title']"),
@@ -44,15 +46,18 @@ def process_html(file_name):
             extract_text("p[data-test='bathrooms']"),
             extract_text("p[data-test='floor-area']"),
         ])
-    
+
     print(f"Se procesaron {len(data)} propiedades")
-    
+
     df = pd.DataFrame(
         data,
-        columns=["FechaDescarga", "Titulo", "Precio", "Ubicacion", "Habitaciones", "Banos", "Mts2"],
+        columns=[
+            "FechaDescarga", "Titulo", "Precio", "Ubicacion",
+            "Habitaciones", "Banos", "Mts2"
+        ],
     )
     print("DataFrame creado con éxito")
-    
+
     csv_file = file_name.replace(".html", ".csv")
     try:
         s3.put_object(Bucket=S3_BUCKET_CSV, Key=csv_file, Body=df.to_csv(index=False))
@@ -61,8 +66,9 @@ def process_html(file_name):
         error_msg = f"Error al subir el archivo CSV a S3: {e}"
         print(error_msg)
         return {"status": "error", "message": error_msg}
-    
+
     return {"status": "success", "csv_file": csv_file}
+
 
 def app(event, context):
     """Función Lambda principal que se activa con eventos S3."""
@@ -74,5 +80,5 @@ def app(event, context):
         error_msg = f"Error al extraer file_name del evento: {e}"
         print(error_msg)
         return {"status": "error", "message": "Evento S3 mal formado"}
-    
+
     return process_html(file_name)
