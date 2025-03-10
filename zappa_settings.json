@@ -9,7 +9,6 @@
             "s3transfer",
             "concurrent"
         ],
-        "profile_name": "default",
         "project_name": "casas",
         "runtime": "python3.10",
         "s3_bucket": "zappa-kpk1mm5he",
@@ -20,14 +19,9 @@
         "events": [
             {
                 "function": "proyecto.app",
-                "expression": "cron(23 1 * * ? *)"
+                "expression": "cron(37 1 * * ? *)"
             }
-        ] ,
-        "environment_variables": {
-            "AWS_ACCESS_KEY_ID": "${{ secrets.AWS_ACCESS_KEY_ID }}",
-            "AWS_SECRET_ACCESS_KEY": "${{ secrets.AWS_SECRET_ACCESS_KEY }}",
-            "AWS_SESSION_TOKEN": "${{ secrets.AWS_SESSION_TOKEN }}"
-        }
+        ]
     },
 
     "dev2": {
@@ -55,12 +49,7 @@
                     "events": ["s3:ObjectCreated:*"]
                 }
             }
-        ] ,
-        "environment_variables": {
-            "AWS_ACCESS_KEY_ID": "${{ secrets.AWS_ACCESS_KEY_ID }}",
-            "AWS_SECRET_ACCESS_KEY": "${{ secrets.AWS_SECRET_ACCESS_KEY }}",
-            "AWS_SESSION_TOKEN": "${{ secrets.AWS_SESSION_TOKEN }}"
-        }
+        ] 
     }
 }
 
