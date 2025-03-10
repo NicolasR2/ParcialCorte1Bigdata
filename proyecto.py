@@ -1,16 +1,20 @@
 import boto3
 import requests
 import datetime
+import logging
+
+# Configuración de logging
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 # Configuración de AWS
 BUCKET_NAME = "landingcasas211"
 s3_client = boto3.client("s3")
 
-headers = {
+HEADERS = {
     "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/110.0.0.0 Safari/537.36"
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
     ),
     "Accept-Language": "es-ES,es;q=0.9",
     "Referer": "https://www.google.com/",
@@ -28,9 +32,10 @@ def app(event, context):
 
     for page in range(1, 11):  # Itera de la página 1 a la 10
         url = base_url.format(page)
-        response = requests.get(url, headers=headers)
+        try:
+            response = requests.get(url, headers=HEADERS, timeout=10)
+            response.raise_for_status()  # Lanza una excepción si el código no es 200
 
-        if response.status_code == 200:
             file_name = f"{today}-page-{page}.html"
             s3_client.put_object(
                 Bucket=BUCKET_NAME,
@@ -38,8 +43,9 @@ def app(event, context):
                 Body=response.text.encode("utf-8"),
                 ContentType="text/html",
             )
-            print(f"Guardado en S3: {file_name}")
-        else:
-            print(f"Error descargando {url}, código {response.status_code}")
+            logger.info(f"Guardado en S3: {file_name}")
+
+        except requests.RequestException as e:
+            logger.error(f"Error descargando {url}: {e}")
 
     return {"message": "Descarga completada"}
