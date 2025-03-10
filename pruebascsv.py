@@ -10,8 +10,8 @@ def test_file_name():
 
 @pytest.fixture
 def sample_html():
-    """HTML con multiples anuncios"""
-    return b"""
+    """HTML con múltiples anuncios"""
+    return """
     <div class="listing-card__content">
         <h2 class="title" data-test="snippet__title">Casa en venta</h2>
         <span class="price__actual" data-test="price__actual">$200,000</span>
@@ -23,29 +23,29 @@ def sample_html():
     <div class="listing-card__content">
         <h2 class="title" data-test="snippet__title">Apartamento en Medellín</h2>
         <span class="price__actual" data-test="price__actual">$150,000</span>
-        <span class="listing-card__location__geo">Medellin, Colombia</span>
+        <span class="listing-card__location__geo">Medellín, Colombia</span>
         <p data-test="bedrooms">2 habitaciones</p>
         <p data-test="bathrooms">1 baño</p>
         <p data-test="floor-area">80 m2</p>
     </div>
-    """.encode("utf-8")
+    """.encode("utf-8")  # 👈 Se usa `.encode("utf-8")` para soportar tildes
 
 @pytest.fixture
 def sample_html_missing_values():
     """HTML con anuncios pero con algunos valores faltantes"""
-    return b"""
+    return """
     <div class="listing-card__content">
         <h2 class="title" data-test="snippet__title">Casa sin precio</h2>
         <span class="listing-card__location__geo">Bogotá, Colombia</span>
         <p data-test="bedrooms">3 habitaciones</p>
         <p data-test="bathrooms">2 baños</p>
     </div>
-    """.encode("utf-8")
+    """.encode("utf-8")  
 
 @pytest.fixture
 def sample_html_empty():
     """HTML sin anuncios"""
-    return b"<html><body><h1>No Listings</h1></body></html>"
+    return "<html><body><h1>No Listings</h1></body></html>".encode("utf-8")  
 
 @pytest.fixture
 def mock_s3_client(sample_html):
