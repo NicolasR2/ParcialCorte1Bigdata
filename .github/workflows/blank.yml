@@ -30,10 +30,6 @@ jobs:
         run: echo Hello, world!
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
       - name: List current directory
         run: ls
       - name: Set up Python
@@ -50,22 +46,22 @@ jobs:
             
       - name: Install dependencies
         run: |
-          python -m venv ent
-          source ent/bin/activate
+          python -m venv venv
+          source venv/bin/activate
           pip install -r requirements.txt
           pip install flake8     
           pip install zappa
           
       - name: Ejecutar flake8
         run: |
-          source ent/bin/activate
+          source venv/bin/activate
           flake8 --max-line-length=100 proyecto1.py proyecto.py pruebascsv.py
       - name: Pytest and update
         run: |
-          source ent/bin/activate
+          source venv/bin/activate
           pytest pruebascsv.py 
       - name: update dev y dev2
         run: |
-          source ent/bin/activate
+          source venv/bin/activate
           zappa update dev
           zappa update dev2
