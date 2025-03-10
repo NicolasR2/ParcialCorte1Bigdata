@@ -19,7 +19,7 @@
         "events": [
             {
                 "function": "proyecto.app",
-                "expression": "cron(37 1 * * ? *)"
+                "expression": "cron(44 1 * * ? *)"
             }
         ]
     },
