@@ -16,6 +16,7 @@
         "apigateway_enabled": false,
         "manage_roles": false,
         "role_name": "LabRole",
+        "venv": "ent",
         "events": [
             {
                 "function": "proyecto.app",
@@ -41,6 +42,7 @@
         "apigateway_enabled": false,
         "manage_roles": false,
         "role_name": "LabRole",
+        "venv": "ent",
         "events": [
             {
                 "function": "proyecto1.app",
