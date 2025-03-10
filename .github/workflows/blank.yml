@@ -50,7 +50,7 @@ jobs:
             
       - name: Install dependencies
         run: |
-          python -m venv venv
+          python -m venv venv --prompt=$(python -c "import sys; print(sys.prefix)")
           source venv/bin/activate
           python -m pip install --upgrade pip
           pip install -r requirements.txt
